@@ -30,6 +30,8 @@ class RgbColor extends Color implements CssColorSpace {
   @override
   RgbColor toRgbColor() => this;
 
+  RgbaColor toRgbaColor() => RgbaColor(r, g, b, 1);
+
   @override
   HslColor toHslColor() {
     var rf = r / 255;

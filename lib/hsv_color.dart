@@ -28,6 +28,8 @@ class HsvColor extends Color {
   @override
   RgbColor toRgbColor() => toHslColor().toRgbColor();
 
+  RgbaColor toRgbaColor() => this.toRgbColor().toRgbaColor();
+
   @override
   HslColor toHslColor() {
     num hsvSaturation = s / 100;

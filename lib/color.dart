@@ -7,13 +7,23 @@ library color;
 import 'dart:math';
 
 part 'cielab_color.dart';
+
 part 'color_filter.dart';
+
 part 'color_parser.dart';
+
 part 'css_color_space.dart';
+
 part 'hex_color.dart';
+
 part 'hsl_color.dart';
+
 part 'hsv_color.dart';
+
 part 'rgb_color.dart';
+
+part 'rgba_color.dart';
+
 part 'xyz_color.dart';
 
 /// An object representing a color.
@@ -23,28 +33,44 @@ part 'xyz_color.dart';
 /// [Color]s can be directly compared using the `==` operator, which will return true if the two [Color] objects represent the same RGB color.
 abstract class Color {
   const Color();
+
   const factory Color.rgb(num r, num g, num b) = RgbColor;
+
+  const factory Color.rgba(num r, num g, num b, num a) = RgbaColor;
+
   factory Color.hex(String hexCode) = HexColor;
+
   const factory Color.hsl(num h, num s, num l) = HslColor;
+
   const factory Color.hsv(num h, num s, num v) = HsvColor;
+
   const factory Color.xyz(num x, num y, num z) = XyzColor;
+
   const factory Color.cielab(num l, num a, num b) = CielabColor;
 
   RgbColor toRgbColor();
+
+  RgbaColor toRgbaColor();
+
   HexColor toHexColor() => toRgbColor().toHexColor();
+
   HslColor toHslColor();
+
   HsvColor toHsvColor();
+
   XyzColor toXyzColor();
+
   CielabColor toCielabColor();
 
   @override
   String toString();
+
   Map<String, num> toMap();
 
   @override
   int get hashCode {
-    var rgb = toRgbColor();
-    return 256 * 256 * rgb.r.toInt() + 256 * rgb.g.toInt() + rgb.b.toInt();
+    RgbaColor rgba = this.toRgbaColor();
+    return (pow(2, 30) * rgba.a).round() + 256 * 256 * rgba.r.toInt() + 256 * rgba.g.toInt() + rgba.b.toInt();
   }
 
   @override
@@ -71,6 +97,8 @@ abstract class Color {
       return toXyzColor();
     } else if (colorType is CielabColor) {
       return toCielabColor();
+    } else if (colorType is RgbaColor) {
+      return toRgbaColor();
     } else {
       return this;
     }

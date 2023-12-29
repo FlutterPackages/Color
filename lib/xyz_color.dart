@@ -33,6 +33,8 @@ class XyzColor extends Color {
     return RgbColor(rgb['r']!, rgb['g']!, rgb['b']!);
   }
 
+  RgbaColor toRgbaColor() => this.toRgbColor().toRgbaColor();
+
   @override
   HslColor toHslColor() => toRgbColor().toHslColor();
 

@@ -36,6 +36,8 @@ class CielabColor extends Color {
     return XyzColor(xyz['x']!, xyz['y']!, xyz['z']!);
   }
 
+  RgbaColor toRgbaColor() => this.toRgbColor().toRgbaColor();
+
   @override
   CielabColor toCielabColor() => this;
 

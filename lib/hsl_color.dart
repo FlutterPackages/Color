@@ -64,6 +64,8 @@ class HslColor extends Color implements CssColorSpace {
     return RgbColor(rgb[0], rgb[1], rgb[2]);
   }
 
+  RgbaColor toRgbaColor() => this.toRgbColor().toRgbaColor();
+
   @override
   HslColor toHslColor() => this;
 

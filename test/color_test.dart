@@ -10,6 +10,14 @@ void main() {
       expect(color.g, equals(255));
       expect(color.b, equals(238));
     });
+    test("through the Color.rgba constructor", () {
+      var color = Color.rgba(192, 255, 238, 0.5) as RgbaColor;
+      expect(color is Color, isTrue);
+      expect(color.r, equals(192));
+      expect(color.g, equals(255));
+      expect(color.b, equals(238));
+      expect(color.a, equals(0.5));
+    });
     test('through the Color.hex constructor', () {
       var color = Color.hex('c0ffee') as HexColor;
       expect(color is Color, isTrue);
@@ -51,6 +59,14 @@ void main() {
       expect(color.r, equals(192));
       expect(color.g, equals(255));
       expect(color.b, equals(238));
+    });
+    test("as an RgbaColor", () {
+      var color = RgbaColor(192, 255, 238, 0.5);
+      expect(color is Color, isTrue);
+      expect(color.r, equals(192));
+      expect(color.g, equals(255));
+      expect(color.b, equals(238));
+      expect(color.a, equals(0.5));
     });
     test('as a HexColor', () {
       var color = HexColor('c0ffee');
@@ -101,6 +117,11 @@ void main() {
       var string = color.toString();
       expect(string, equals('r: 192, g: 255, b: 238'));
     });
+    test("from an RgbaColor", () {
+      var color = const Color.rgba(192, 255, 238, 0.5);
+      String string = color.toString();
+      expect(string, equals('r: 192, g: 255, b: 238, a: 0.5'));
+    });
     test('from a HexColor', () {
       var color = Color.hex('c0ffee');
       var string = color.toString();
@@ -139,6 +160,11 @@ void main() {
       var string = color.toCssString();
       expect(string, equals('rgb(192, 255, 238)'));
     });
+    test("from an RgbaColor", () {
+      var color = const Color.rgba(192, 255, 238, 0.5) as RgbColor;
+      String string = color.toCssString();
+      expect(string, equals('rgba(192, 255, 238, 0.5)'));
+    });
     test('from a HexColor', () {
       var color = Color.hex('c0ffee') as HexColor;
       var string = color.toCssString();
@@ -176,6 +202,7 @@ void main() {
   });
   group('Colors can be converted', () {
     late RgbColor rgb;
+    late RgbaColor rgba;
     late HexColor hex;
     late HslColor hsl;
     late HsvColor hsv;
@@ -183,6 +210,7 @@ void main() {
     late CielabColor cielab;
     setUp(() {
       rgb = const RgbColor(192, 255, 238);
+      rgba = const RgbaColor(192, 255, 238, 1);
       hex = HexColor('c0ffee');
       hsl = const HslColor(163.8, 100, 87.6);
       hsv = const HsvColor(163.8, 24.7, 100);
@@ -193,6 +221,10 @@ void main() {
     test('from rgb to hex', () {
       var conversion = rgb.toHexColor();
       expect(conversion, equals(hex));
+    });
+    test('from rgb to rgba', () {
+      var conversion = rgb.toRgbaColor();
+      expect(conversion, equals(rgba));
     });
     test('from rgb to hsl', () {
       var conversion = rgb.toHslColor();
@@ -211,9 +243,34 @@ void main() {
       expect(conversion, equals(cielab));
     });
 
+    test("from rgba to rgb", () {
+      RgbColor conversion = rgba.toRgbColor();
+      expect(conversion, equals(rgb));
+    });
+    test("from rgba to hex", () {
+      HexColor conversion = rgba.toHexColor();
+      expect(conversion, equals(hex));
+    });
+    test("from rgba to hsl", () {
+      HslColor conversion = rgba.toHslColor();
+      expect(conversion, equals(hsl));
+    });
+    test("from rgba to xyz", () {
+      XyzColor conversion = rgba.toXyzColor();
+      expect(conversion, equals(xyz));
+    });
+    test("from rgba to cielab", () {
+      CielabColor conversion = rgba.toCielabColor();
+      expect(conversion, equals(cielab));
+    });
+
     test('from hex to rgb', () {
       var conversion = hex.toRgbColor();
       expect(conversion, equals(rgb));
+    });
+    test('from hex to rgba', () {
+      var conversion = hex.toRgbaColor();
+      expect(conversion, equals(rgba));
     });
     test('from hex to hsl', () {
       var conversion = hex.toHslColor();
@@ -236,6 +293,10 @@ void main() {
       var conversion = hsl.toRgbColor();
       expect(conversion, equals(rgb));
     });
+    test('from hsl to rgba', () {
+      var conversion = hsl.toRgbaColor();
+      expect(conversion, equals(rgba));
+    });
     test('from hsl to hsv', () {
       var conversion = hsl.toHsvColor();
       expect(conversion, equals(hsv));
@@ -252,6 +313,10 @@ void main() {
     test('from hsv to rgb', () {
       var conversion = hsv.toRgbColor();
       expect(conversion, equals(rgb));
+    });
+    test('from hsv to rgba', () {
+      var conversion = hsv.toRgbaColor();
+      expect(conversion, equals(rgba));
     });
     test('from hsv to hsl', () {
       var conversion = hsv.toHslColor();
@@ -270,6 +335,10 @@ void main() {
       var conversion = xyz.toRgbColor();
       expect(conversion, equals(rgb));
     });
+    test('from xyz to rgba', () {
+      var conversion = xyz.toRgbaColor();
+      expect(conversion, equals(rgba));
+    });
     test('from xyz to hsl', () {
       var conversion = xyz.toHslColor();
       expect(conversion, equals(hsl));
@@ -286,6 +355,10 @@ void main() {
     test('from cielab to rgb', () {
       var conversion = cielab.toRgbColor();
       expect(conversion, equals(rgb));
+    });
+    test('from cielab to rgba', () {
+      var conversion = cielab.toRgbaColor();
+      expect(conversion, equals(rgba));
     });
     test('from cielab to hsl', () {
       var conversion = cielab.toHslColor();
